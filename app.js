@@ -31,6 +31,7 @@ app.use(function *(next) {
 app.use(bodyParser());
 app.use(_.get('/track_list', music.list));
 app.use(_.get('/order', music.add));
+app.use(_.post('/music', music.add));
 app.use(_.delete('/delete', music.remove));
 
 app.listen(3000);
