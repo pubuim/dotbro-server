@@ -1,10 +1,9 @@
 /**
  * Created by trigged on 7/25/15.
  */
-const WYMusic = require("../services/wymusic")
+const MusicHandler = require("../services/index")
   , Song = require("../models/song")
   , playlist = require("../models/playlist")
-  , _ = require("lodash")
 
 
 var music = {
@@ -36,7 +35,7 @@ var music = {
   },
 
   add: function *() {
-    var result  = yield WYMusic.analysis(this.request.body.url)
+    var result  = yield MusicHandler(this.request.body.url)
     //if(is_string(result)){
       this.body = {
         code : 0,

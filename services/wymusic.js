@@ -4,9 +4,14 @@
 "use strict"
 const urllib = require("urllib")
   , Url = require("url")
+  , BaseMusic = require("./music")
 
 //03 17
-class WYMusic {
+class WYMusic extends BaseMusic {
+
+  match(url) {
+    return /music.163.com/.test(url)
+  }
 
   musicApi(path, query) {
     return Url.format({
@@ -17,32 +22,26 @@ class WYMusic {
     })
   }
 
-
   * analysis(url) {
     let id = url.split("id=")[1]
     if (!id) {
-      return `不支持的分享地址：${url}}`
+      BaseMusic.SupportError();
     }
-    try {
-      let result = yield urllib.request(this.musicApi("api/song/detail", {
-          id: id,
-          ids: `[${id}]`
-        }),
-        {
-          headers: {
-            Referer: "http://music.163.com/",
-            Cookie: "appver=1.5.0.75771"
-          }
-        })
-      if (result&& result.data && result.status === 200) {
-        return result.data.toString()
-      }
-      else {
-        return `不支持的分享地址：${url}}`
-      }
+    let result = yield urllib.request(this.musicApi("api/song/detail", {
+        id: id,
+        ids: `[${id}]`
+      }),
+      {
+        headers: {
+          Referer: "http://music.163.com/",
+          Cookie: "appver=1.5.0.75771"
+        }
+      })
+    if (result && result.data && result.status === 200) {
+      return result.data.toString()
     }
-    catch (err) {
-      return err
+    else {
+      BaseMusic.SupportError();
     }
   }
 }
