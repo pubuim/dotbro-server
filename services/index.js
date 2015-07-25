@@ -8,12 +8,9 @@ const WYMusic = require("./wymusic")
 const hanlders = [WYMusic]
 
 function *getHnadler(url) {
-  let hand
-  hanlders.forEach(function (handler) {
-    if (handler.match(url)) {
-      hand = handler
-      return
-    }
+
+  let hand = hanlders.find(function (handler) {
+    return handler.match(url)
   })
   if (hand) {
     return yield hand.analysis(url)
