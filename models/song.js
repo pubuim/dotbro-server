@@ -13,6 +13,7 @@ class Song {
       singer: null,
       album: null,
       image: null,
+      resourceUrl:null,
       orderer: null
     }, options)
   }

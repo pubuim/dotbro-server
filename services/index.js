@@ -3,17 +3,16 @@
  */
 
 const WYMusic = require("./wymusic")
-  , BaseMusic = require("./wymusic")
-
+  , BaseMusic = require("./music")
+  , Song = require("../models/song")
 const hanlders = [WYMusic]
 
-function *getHnadler(url) {
-
+function *getHnadler(url,orderer) {
   let hand = hanlders.find(function (handler) {
-    return handler.match(url)
+    return handler.match(url,orderer)
   })
   if (hand) {
-    return yield hand.analysis(url)
+    return new Song(yield hand.analysis(url,orderer))
   } else {
     throw BaseMusic.SupportError();
   }
