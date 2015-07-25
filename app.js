@@ -2,6 +2,10 @@
  * Created by trigged on 7/25/15.
  */
 "use strict"
+
+require('node-extensions')
+require('babel/register')
+
 const koa = require('koa')
   , app = koa()
   , bodyParser = require('koa-body-parser')

@@ -9,12 +9,12 @@ var music = {
     this.body =  'list'
   },
 
-  add :function *(){
+  add: function *(){
     this.body = yield WYMusic.analysis(this.request.body.url)
-    
   },
+
   remove: function *(wyID) {
-    this.body =  `remove ${wyID}`
+    this.body = `remove ${wyID}`
   }
 };
 module.exports = music
