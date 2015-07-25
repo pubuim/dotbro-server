@@ -16,7 +16,7 @@ class BaseMusic {
     throw new Error.BSS("Don't call this function not Implementation");
   }
 
-  * analysis(url) {
+  * analysis(url, orderer) {
     throw new Error.BSS("Don't call this function not Implementation");
   }
 }

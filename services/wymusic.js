@@ -5,6 +5,7 @@
 const urllib = require("urllib")
   , Url = require("url")
   , BaseMusic = require("./music")
+  , Song = require("../models/song")
 
 //03 17
 class WYMusic extends BaseMusic {
@@ -22,7 +23,7 @@ class WYMusic extends BaseMusic {
     })
   }
 
-  * analysis(url) {
+  * analysis(url, orderer) {
     let id = url.split("id=")[1]
     if (!id) {
       BaseMusic.SupportError();
@@ -38,7 +39,17 @@ class WYMusic extends BaseMusic {
         }
       })
     if (result && result.data && result.status === 200) {
-      return result.data.toString()
+      let data = JSON.parse(result.data.toString())
+      console.log("resu",data);
+      let song = data.songs[0]
+      return new Song({
+        name: song.name,
+        album: song.album.name,
+        image: song.album.artist.picUrl,
+        resourceUrl: song.mp3Url,
+        orderer: orderer
+      })
+
     }
     else {
       BaseMusic.SupportError();
