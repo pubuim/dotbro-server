@@ -7,6 +7,7 @@
     "koa": "^0.21.0",
     "koa-body-parser": "^1.1.2",
     "koa-route": "^2.4.2",
+    "play-sound-v12": "^0.1.1",
     "urllib": "^2.3.9"
   },
   "devDependencies": {},
