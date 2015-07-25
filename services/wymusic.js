@@ -20,28 +20,28 @@ class WYMusic {
 
   * analysis(url) {
     let id = url.split("id=")[1]
-    if (!id) {
-      return `不支持的分享地址：${url}}`
+    if (id) {
+      try {
+        let result = yield urllib.request(this.musicApi("api/song/detail", {
+            id: id,
+            ids: `[${id}]`
+          }),
+          {
+            headers: {
+              Referer: "http://music.163.com/",
+              Cookie: "appver=1.5.0.75771"
+            }
+          })
+        if (result[0] && result[1] && result[1].status === 200) {
+          return result
+        }
+      }
+      catch (err) {
+        return err
+      }
     }
-    let musicUrl = this.musicApi("api/song/detail", {
-      id: id,
-      ids: `[${id}]`
-    })
-    console.log("grt mus", musicUrl);
-    try {
-      let result = yield urllib.request(musicUrl,
-        {
-          headers: {
-            Referer: "http://music.163.com/",
-            Cookie: "appver=1.5.0.75771"
-          }
-        })
-      console.log("result ", result);
-      return result
-    }
-    catch (err) {
-      return result
-    }
+    return `不支持的分享地址：${url}}`
+
   }
 }
 
