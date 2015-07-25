@@ -1,23 +1,25 @@
 /**
  * Created by trigged on 7/25/15.
  */
+const WYMusic = require("../services/WYMusic")
 
 
 var db = {
-  tobi: { name: 'tobi', species: 'ferret' },
-  loki: { name: 'loki', species: 'ferret' },
-  jane: { name: 'jane', species: 'ferret' }
+  tobi: {name: 'tobi', species: 'ferret'},
+  loki: {name: 'loki', species: 'ferret'},
+  jane: {name: 'jane', species: 'ferret'}
 };
 var music = {
-  list: function *(){
-    var names = Object.keys(db);
-    this.body = 'pets: ' + names.join(', ');
+  list: function *() {
+    this.body =  "list"
   },
 
-  show: function *(name){
-    var pet = db[name];
-    if (!pet) return this.throw('cannot find that pet', 404);
-    this.body = pet.name + ' is a ' + pet.species;
+  add :function *(){
+    this.body = yield WYMusic.analysis(this.request.body.url)
+
+  },
+  remove: function *(wyID) {
+    this.body =  `remove ${wyID}`
   }
 };
 module.exports = music

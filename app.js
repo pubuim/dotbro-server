@@ -4,8 +4,9 @@
 "use strict"
 const koa = require('koa')
   , app = koa()
+  , bodyParser = require('koa-body-parser')
   , _ = require('koa-route')
-  ,music = require("./api/music")
+  , music = require("./api/music")
 
 app.use(function *(next) {
   var start = new Date;
@@ -23,11 +24,9 @@ app.use(function *(next) {
   var ms = new Date - start;
   console.log('%s %s - %s', this.method, this.url, ms);
 });
-
-app.use(_.get('/music', music));
-
-app.use(function *() {
-  this.body = 'Hello World';
-});
+app.use(bodyParser());
+app.use(_.get('/music', music.list));
+app.use(_.post('/music', music.add));
+app.use(_.delete('/music/:id', music.remove));
 
 app.listen(3000);
