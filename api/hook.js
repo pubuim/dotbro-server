@@ -3,6 +3,7 @@
  */
 const WYMusic = require("../services/wymusic")
 const Regex = require('../services/regex')
+const MusicHandler = require("../services/index")
 
 
 var music = {
@@ -18,11 +19,21 @@ var music = {
       }
     }
 
-    let ret = yield WYMusic.analysis(urlMatched[1])
-    // TODO 需要等待 API 完成后实现添加和返回逻辑
-
-    this.body = {
-      text: '音乐添加完成：' + ret
+    try {
+      var ret = yield MusicHandler(urlMatched[0])
+      this.body = {
+        text: '音乐添加完成：' + ret.name,
+        attachments: [{
+          title: ret.name,
+          url: urlMatched[1],
+          photoUrl: ret.image,
+          desription: ret.album
+        }]
+      }
+    } catch (err) {
+      this.body = {
+        text: '音乐添加失败：' + err.message
+      }
     }
   }
 };
