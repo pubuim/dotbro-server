@@ -1,14 +1,9 @@
 /**
  * Created by trigged on 7/25/15.
  */
-const WYMusic = require("../services/WYMusic")
+const WYMusic = require("../services/wymusic")
 
 
-var db = {
-  tobi: {name: 'tobi', species: 'ferret'},
-  loki: {name: 'loki', species: 'ferret'},
-  jane: {name: 'jane', species: 'ferret'}
-};
 var music = {
   list: function *() {
     this.body =  "list"
