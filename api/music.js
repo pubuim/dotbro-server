@@ -3,7 +3,11 @@
  */
 const MusicHandler = require('../services/index')
   , playlist = require('../models/playlist')
+  , Player = require('../models/player')
 
+var player = new Player(() => playlist.shift())
+
+setInterval(() => console.info(`There's ${playlist.count()} song(s) reserved`), 5 * 1000)
 
 var music = {
 
@@ -12,16 +16,9 @@ var music = {
   },
 
   add: function* () {
-
-    var result = yield MusicHandler(this.req.query.url, this.req.ip)
-    //if(is_string(result)){
-      this.body = {
-        code : 0,
-        error_desc : result
-      }
-    //}
-    //var song =new Song(this.body)
-
+    let song = yield MusicHandler(this.query.url, this.req.ip)
+    playlist.add(song)
+    if (!player.stream) { player.play(song) }
   },
 
   remove: function* () {
