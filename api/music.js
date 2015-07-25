@@ -1,38 +1,15 @@
 /**
  * Created by trigged on 7/25/15.
  */
-const WYMusic = require("../services/wymusic")
-  , Song = require("../models/song")
-  , playlist = require("../models/playlist")
-  , _ = require("lodash")
+const WYMusic = require('../services/wymusic')
+  , Song = require('../models/song')
+  , playlist = require('../models/playlist')
+  , _ = require('lodash')
 
 
 var music = {
   list: function *() {
-    // this.body = playlist.values()
-
-    // @TODO dummy
-    this.body = {
-      code: 0,
-      data: [
-        {
-          "id" : 1,
-          "name" : "くず",
-          "singer" :"野郎",
-          "album" : "Asshole Collection",
-          "image" : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKyV1WnmyHWfI5ArjllzPrs6e9afnt0IDIdmNDKGZpY6_14p5y",
-          "orderer" : "unknown"
-        },
-        {
-          "id" : 2,
-          "name" : "羊驼之歌",
-          "singer" :"unknown",
-          "album" : "unknown",
-          "image" : "http://i1.hdslb.com/320_180/video/71/71d693f57f3c91703859148265bffa75.jpg",
-          "orderer" : "unknown"
-        }
-      ]
-    }
+    this.data = playlist.values()
   },
 
   add: function *() {
@@ -48,7 +25,12 @@ var music = {
   },
 
   remove: function *(wyID) {
-    this.body = `remove ${wyID}`
+    if (!wyID) {
+      throw new Error('ID is requred')
+    }
+    if (!playlist.remove(wyID)) {
+      throw new Error(`Song: ${wyID} is not exists or playing`)
+    }
   }
 };
 module.exports = music

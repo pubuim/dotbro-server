@@ -13,7 +13,8 @@ class Song {
       singer: null,
       album: null,
       image: null,
-      orderer: null
+      orderer: null,
+      playing: false
     }, options)
   }
 

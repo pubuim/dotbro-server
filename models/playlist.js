@@ -20,9 +20,13 @@ module.exports = {
       list.delete(id)
     })
 
+    let originalLength = order.length
+
     order = order.filter(function (id) {
-      return !ids.find(id)
+      return !ids.find(id) && list.get(id).playing
     })
+
+    return originalLength - order.length
   },
 
   values: function (id, count) {
