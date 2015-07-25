@@ -8,8 +8,12 @@
     "koa": "^0.21.0",
     "koa-body-parser": "^1.1.2",
     "koa-route": "^2.4.2",
+    "lame": "^1.2.2",
+    "lodash": "^3.10.0",
     "mdns": "^2.2.9",
     "node-extensions": "^1.5.2",
+    "request": "^2.60.0",
+    "speaker": "git://github.com/bradjc/node-speaker.git#patch-1",
     "urllib": "^2.3.9"
   },
   "devDependencies": {},

@@ -29,8 +29,8 @@ app.use(function *(next) {
   console.log('%s %s - %s', this.method, this.url, ms);
 });
 app.use(bodyParser());
-app.use(_.get('/music', music.list));
-app.use(_.post('/music', music.add));
-app.use(_.delete('/music/:id', music.remove));
+app.use(_.get('/track_list', music.list));
+app.use(_.get('/order', music.add));
+app.use(_.delete('/delete', music.remove));
 
 app.listen(3000);
