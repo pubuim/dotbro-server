@@ -11,6 +11,7 @@ const koa = require('koa')
   , bodyParser = require('koa-body-parser')
   , _ = require('koa-route')
   , music = require("./api/music")
+  , hook = require("./api/hook")
 
 app.use(function *(next) {
   var start = new Date;
@@ -31,6 +32,7 @@ app.use(function *(next) {
 app.use(bodyParser());
 app.use(_.get('/music', music.list));
 app.use(_.post('/music', music.add));
+app.use(_.post('/hook_receive', hook.receive));
 app.use(_.delete('/music/:id', music.remove));
 
 app.listen(3000);
