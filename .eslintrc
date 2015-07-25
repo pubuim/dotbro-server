@@ -1,0 +1,63 @@
+{
+  "rules": {
+    "brace-style": 0,
+    "radix": 2,
+    "no-eq-null": 0,
+    "quotes": 0,
+    "no-else-return": 0,
+    "block-scoped-var": 2,
+    "no-lonely-if": 0,
+    "comma-style": 0,
+    "comma-spacing": 0,
+    "eol-last": 0,
+    "space-infix-ops": 0,
+    "no-nested-ternary": 1,
+    "curly": 0,
+    "camelcase": 0,
+    "no-undefined": 0,
+    "no-multi-spaces": 0,
+    "wrap-iife": [
+      2,
+      "inside"
+    ],
+    "generator-star": 0,
+    "no-div-regex": 1,
+    "strict": 0,
+    "space-after-keywords": 0,
+    "no-reserved-keys": 0,
+    "no-process-exit": 0,
+    "no-new-require": 2,
+    "no-mixed-requires": 0,
+    "no-debugger": 1,
+    "no-floating-decimal": 2,
+    "no-console": 0,
+    "space-before-blocks": 0,
+    "no-trailing-spaces": 2,
+    "no-wrap-func": 1,
+    "semi-spacing": 0,
+    "no-loop-func": 1,
+    "space-before-function-parentheses": 0,
+    "no-extra-parens": 0,
+    "space-return-throw-case": 0,
+    "no-path-concat": 2,
+    "semi": 0,
+    "global-strict": 0,
+    "new-cap": 0,
+    "no-catch-shadow": 2,
+    "handle-callback-err": 0,
+    "no-mixed-spaces-and-tabs": [
+      2,
+      "smart-tabs"
+    ],
+    "eqeqeq": 2,
+    "key-spacing": 0,
+    "consistent-return": 0,
+    "no-underscore-dangle": 0,
+    "no-shadow": 0,
+    "dot-notation": 0
+  },
+  "env": {
+    "node": true,
+    "es6": true
+  }
+}
