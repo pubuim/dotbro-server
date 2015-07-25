@@ -8,6 +8,7 @@
     "koa": "^0.21.0",
     "koa-body-parser": "^1.1.2",
     "koa-route": "^2.4.2",
+    "mdns": "^2.2.9",
     "lame": "^1.2.2",
     "node-extensions": "^1.5.2",
     "request": "^2.60.0",
