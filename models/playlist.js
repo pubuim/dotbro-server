@@ -26,19 +26,22 @@ module.exports = {
   },
 
   values: function (id, count) {
-    var start = order.findIndex(id)
-
-    if (start === -1) {
-      return []
+    var start;
+    if (!id) {
+      start = 0;
+    }
+    else {
+      start = order.findIndex(id)
+      if (start === -1) {
+        return []
+      }
     }
 
     var result = []
     count = Number.isNumber(count) && count > 0 ? count : 20
-
     for (; count; start++, count--) {
       result.push(list.get(order[start]))
     }
-
     return result
   }
 }
