@@ -41,6 +41,7 @@ app.use(function* (next) {
       error_desc: e instanceof Error ? e.message : e,
       data: {}
     }
+    console.error(e.stack)
     return
   }
   this.body = {
@@ -50,8 +51,12 @@ app.use(function* (next) {
 })
 
 app.use(_.get('/track_list', music.list));
+
 app.use(_.get('/order', music.add));
-app.use(_.delete('/delete', music.remove));
+// app.use(_.post('/order', music.add));
+
+app.use(_.get('/delete', music.remove));
+// app.use(_.delete('/delete', music.remove));
 
 app.listen(3000);
 mdns();

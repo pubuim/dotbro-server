@@ -1,19 +1,19 @@
 /**
  * Created by trigged on 7/25/15.
  */
-const WYMusic = require('../services/wymusic')
-  , Song = require('../models/song')
+const MusicHandler = require('../services/index')
   , playlist = require('../models/playlist')
-  , _ = require('lodash')
 
 
 var music = {
-  list: function *() {
-    this.data = playlist.values()
+
+  list: function* () {
+    this.data = playlist.values(this.query.last_id, this.query.count)
   },
 
-  add: function *() {
-    var result  = yield WYMusic.analysis(this.request.body.url)
+  add: function* () {
+
+    var result = yield MusicHandler(this.req.query.url, this.req.ip)
     //if(is_string(result)){
       this.body = {
         code : 0,
@@ -24,12 +24,9 @@ var music = {
 
   },
 
-  remove: function *(wyID) {
-    if (!wyID) {
-      throw new Error('ID is requred')
-    }
-    if (!playlist.remove(wyID)) {
-      throw new Error(`Song: ${wyID} is not exists or playing`)
+  remove: function* () {
+    if (!playlist.remove(this.query.ids)) {
+      throw new Error(`Song: ${this.query.ids} is not exists or playing`)
     }
   }
 };
