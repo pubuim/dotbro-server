@@ -16,7 +16,8 @@ var music = {
   },
 
   add: function* () {
-    let song = yield MusicHandler(this.query.url, this.req.ip)
+    console.info(`got: ${this.request.body.url}`)
+    let song = yield MusicHandler(this.request.body.url, this.req.ip)
     playlist.add(song)
     if (!player.stream) { player.play(song) }
   },

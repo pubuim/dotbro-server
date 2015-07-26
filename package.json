@@ -6,8 +6,8 @@
   "dependencies": {
     "babel": "^5.8.5",
     "koa": "^0.21.0",
-    "koa-body-parser": "^1.1.2",
-    "koa-route": "^2.4.2",
+    "koa-body": "^1.2.1",
+    "koa-router": "^5.1.2",
     "lame": "^1.2.2",
     "mdns": "^2.2.9",
     "node-extensions": "^1.5.2",

@@ -9,8 +9,8 @@ require('babel/register')
 
 const koa = require('koa')
   , app = koa()
-  , bodyParser = require('koa-body-parser')
-  , _ = require('koa-route')
+  , body = require('koa-body')()
+  , router = require('koa-router')()
   , music = require("./api/music")
 
 app.use(function *(next) {
@@ -29,7 +29,6 @@ app.use(function *(next) {
   var ms = new Date - start;
   console.log('%s %s - %s', this.method, this.url, ms);
 });
-app.use(bodyParser());
 
 app.use(function* (next) {
   try {
@@ -47,14 +46,17 @@ app.use(function* (next) {
     code: 0,
     data: this.data || {}
   }
+
+  yield next
 })
 
-app.use(_.get('/track_list', music.list));
+app.use(router.routes());
+app.use(router.allowedMethods());
 
-app.use(_.get('/order', music.add));
-// app.use(_.post('/order', music.add));
+router.get('/track_list', music.list);
 
-app.use(_.get('/delete', music.remove));
-// app.use(_.delete('/delete', music.remove));
+router.post('/order', body, music.add);
+
+router.post('/delete', body, music.remove);
 
 app.listen(3000);
