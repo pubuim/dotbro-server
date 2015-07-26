@@ -59,4 +59,8 @@ router.post('/order', body, music.add);
 
 router.post('/delete', body, music.remove);
 
+router.get('/', function* () {
+  this.body = 'Powered by PUBU.IM(c)'
+})
+
 app.listen(3000);
