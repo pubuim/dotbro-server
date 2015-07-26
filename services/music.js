@@ -2,6 +2,7 @@
  * Created by trigged on 7/25/15.
  */
 
+/*eslint-disable no-unused-vars*/
 class BaseMusic {
 
   static SupportError() {

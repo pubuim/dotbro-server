@@ -14,7 +14,8 @@ class Song {
       album: null,
       image: null,
       resourceUrl:null,
-      orderer: null
+      orderer: null,
+      playing: false
     }, options)
   }
 

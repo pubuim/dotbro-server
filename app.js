@@ -6,10 +6,11 @@
 require('node-extensions')
 require('babel/register')
 
+
 const koa = require('koa')
   , app = koa()
-  , bodyParser = require('koa-body-parser')
-  , _ = require('koa-route')
+  , body = require('koa-body')()
+  , router = require('koa-router')()
   , music = require("./api/music")
   , hook = require("./api/hook")
 
@@ -29,11 +30,40 @@ app.use(function *(next) {
   var ms = new Date - start;
   console.log('%s %s - %s', this.method, this.url, ms);
 });
-app.use(bodyParser());
-app.use(_.get('/track_list', music.list));
-app.use(_.get('/order', music.add));
-app.use(_.post('/music', music.add));
+
+app.use(function* (next) {
+  try {
+    yield next
+  } catch (e) {
+    this.body = {
+      code: 1,
+      error_desc: e instanceof Error ? e.message : e,
+      data: {}
+    }
+    console.error(e.stack)
+    return
+  }
+  this.body = {
+    code: 0,
+    data: this.data || {}
+  }
+
+  yield next
+})
+
+app.use(router.routes());
+app.use(router.allowedMethods());
+
+router.get('/track_list', music.list);
+
+router.post('/order', body, music.add);
+
+router.post('/delete', body, music.remove);
+
 app.use(_.post('/hook_receive', hook.receive));
-app.use(_.delete('/music/:id', music.remove));
+
+router.get('/', function* () {
+  this.body = 'Powered by PUBU.IM(c)'
+})
 
 app.listen(3000);
