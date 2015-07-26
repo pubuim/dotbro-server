@@ -6,7 +6,6 @@
 require('node-extensions')
 require('babel/register')
 
-const mdns = require('./libs/mdns')
 
 const koa = require('koa')
   , app = koa()
@@ -59,4 +58,3 @@ app.use(_.get('/delete', music.remove));
 // app.use(_.delete('/delete', music.remove));
 
 app.listen(3000);
-mdns();
