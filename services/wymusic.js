@@ -42,6 +42,8 @@ class WYMusic extends BaseMusic {
       let data = JSON.parse(result.data.toString())
       // console.log("resu",data);
       let song = data.songs[0]
+      if (!song) { BaseMusic.SupportError(); }
+
       return new Song({
         name: song.name,
         album: song.album.name,

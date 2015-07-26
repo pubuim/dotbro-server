@@ -6,7 +6,7 @@
 class BaseMusic {
 
   static SupportError() {
-    throw Error(`不支持的分享地址`)
+    throw new Error(`不支持的分享地址`)
   }
 
   match(url) {

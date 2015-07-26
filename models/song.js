@@ -8,6 +8,18 @@ function genId (data) {
 
 class Song {
   constructor (options) {
+
+    Object.defineProperties(this, {
+      $id: {
+        enumerable: false,
+        value: genId()
+      },
+      id: {
+        enumerable: true,
+        get: () => this.$id
+      }
+    })
+
     Object.assign(this, {
       name: null,
       singer: null,
@@ -17,13 +29,7 @@ class Song {
       orderer: null,
       playing: false
     }, options)
-  }
 
-  get id () {
-    if (!this.$id) {
-      this.$id = genId(this.name)
-    }
-    return this.$id
   }
 }
 

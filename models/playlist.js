@@ -10,37 +10,37 @@ module.exports = {
   },
 
   get: function () {
-    list.get(order.first)
-  },
-
-  shift: function () {
-    let id = order.shift()
-    if (!id) { return null }
-
-    let song = list.get(id)
-    list.delete(id)
-
-    return song
+    return list.get(order.first)
   },
 
   count: function () {
     return order.length
   },
 
-  remove: function (id) {
+  remove: function (id, force) {
     let ids = [].concat(id)
+    let removed = []
 
     ids.forEach(function (id) {
+      let index = order.indexOf(id)
+      if (index === -1) {
+        console.warn(`Song: ${id} not found in playlist`)
+        return
+      }
+
+      let song = list.get(id)
+      if (!force && song.playing) {
+        console.warn(`Song: ${id} not found in playlist`)
+        return
+      }
+
+      removed.push(song)
+
+      order.splice(index, 1)
       list.delete(id)
     })
 
-    let originalLength = order.length
-
-    order = order.filter(function (id) {
-      return !ids.find(id) && list.get(id).playing
-    })
-
-    return originalLength - order.length
+    return removed
   },
 
   values: function (id, count) {
