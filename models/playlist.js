@@ -13,6 +13,20 @@ module.exports = {
     list.get(order.first)
   },
 
+  shift: function () {
+    let id = order.shift()
+    if (!id) { return null }
+
+    let song = list.get(id)
+    list.delete(id)
+
+    return song
+  },
+
+  count: function () {
+    return order.length
+  },
+
   remove: function (id) {
     let ids = [].concat(id)
 
@@ -20,9 +34,13 @@ module.exports = {
       list.delete(id)
     })
 
+    let originalLength = order.length
+
     order = order.filter(function (id) {
-      return !ids.find(id)
+      return !ids.find(id) && list.get(id).playing
     })
+
+    return originalLength - order.length
   },
 
   values: function (id, count) {
@@ -38,10 +56,11 @@ module.exports = {
     }
 
     var result = []
-    count = Number.isNumber(count) && count > 0 ? count : 20
+    count = Math.floor(count) || 20
     for (; count; start++, count--) {
       result.push(list.get(order[start]))
     }
-    return result
+    return result.compact()
+
   }
 }
