@@ -14,6 +14,11 @@ class WYMusic extends BaseMusic {
     return /music.163.com/.test(url)
   }
 
+  appMatch(url) {
+    //http://music.163.com/#/song/4280207/
+    return /music.163.com/.test(url)
+  }
+
   musicApi(path, query) {
     return Url.format({
       protocol: "http",
@@ -26,7 +31,12 @@ class WYMusic extends BaseMusic {
   * analysis(url, orderer) {
     let id = url.split("id=")[1]
     if (!id) {
-      BaseMusic.SupportError();
+      ///http://music.163.com/#/song/4280207/
+      id = url.match(/song\/(\d+)/)
+      if (!id) {
+        BaseMusic.SupportError();
+      }
+      id = id[1]
     }
     let result = yield urllib.request(this.musicApi("api/song/detail", {
         id: id,
@@ -42,7 +52,9 @@ class WYMusic extends BaseMusic {
       let data = JSON.parse(result.data.toString())
       // console.log("resu",data);
       let song = data.songs[0]
-      if (!song) { BaseMusic.SupportError(); }
+      if (!song) {
+        BaseMusic.SupportError();
+      }
 
       return new Song({
         name: song.name,
