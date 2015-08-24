@@ -14,9 +14,9 @@ const koa = require('koa')
   , music = require("./api/music")
 
 app.use(function *(next) {
-  var start = new Date;
+  var start = new Date();
   yield next;
-  var ms = new Date - start;
+  var ms = new Date() - start;
   this.set('X-Response-Time', ms + 'ms');
 });
 
@@ -24,9 +24,9 @@ app.use(function *(next) {
 // logger
 
 app.use(function *(next) {
-  var start = new Date;
+  var start = new Date();
   yield next;
-  var ms = new Date - start;
+  var ms = new Date() - start;
   console.log('%s %s - %s', this.method, this.url, ms);
 });
 
@@ -53,13 +53,11 @@ app.use(function* (next) {
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-router.get('/track_list', music.list);
+router.get('/songs', music.list);
+router.post('/songs', body, music.add);
+router.delete('/songs', music.remove);
 
-router.post('/order', body, music.add);
-
-router.post('/delete', body, music.remove);
-
-router.get('/', function* () {
+router.all('/', function* () {
   this.body = 'Powered by PUBU.IM(c)'
 })
 
