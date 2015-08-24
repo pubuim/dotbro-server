@@ -12,6 +12,7 @@ const koa = require('koa')
   , body = require('koa-body')()
   , router = require('koa-router')()
   , music = require("./api/music")
+  , hook = require("./api/hook")
 
 app.use(function *(next) {
   var start = new Date();
@@ -56,6 +57,8 @@ app.use(router.allowedMethods());
 router.get('/songs', music.list);
 router.post('/songs', body, music.add);
 router.delete('/songs', music.remove);
+
+router.post('/hook_receive', hook.receive);
 
 router.all('/', function* () {
   this.body = 'Powered by PUBU.IM(c)'
