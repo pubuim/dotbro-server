@@ -36,7 +36,7 @@ var music = {
       }
 
       try {
-        var song = yield MusicHandler(urlMatched[0])
+        var song = yield MusicHandler(urlMatched[0], (body.user_name || '匿名') + '@瀑布')
 
         PlayerService.playlist.add(song)
         PlayerService.activate()
