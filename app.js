@@ -43,9 +43,12 @@ app.use(function* (next) {
     console.error(e.stack)
     return
   }
-  this.body = {
-    code: 0,
-    data: this.data || {}
+
+  if (this.data) {
+    this.body = {
+      code: 0,
+      data: this.data || {}
+    }
   }
 
   yield next
@@ -58,10 +61,10 @@ router.get('/songs', music.list);
 router.post('/songs', body, music.add);
 router.delete('/songs', music.remove);
 
-router.post('/hook_receive', hook.receive);
+router.post('/hook_receive', body, hook.receive);
 
 router.all('/', function* () {
   this.body = 'Powered by PUBU.IM(c)'
 })
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
