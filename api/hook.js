@@ -46,8 +46,8 @@ var music = {
           attachments: [{
             title: song.name,
             url: urlMatched[0],
-            photoUrl: song.image,
-            description: song.album
+            photoUrl: (song.singer ? song.singer + ' - ' : '') + song.image,
+            description: song.orderer
           }],
           create: true
         }
