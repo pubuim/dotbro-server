@@ -14,11 +14,6 @@ class WYMusic extends BaseMusic {
     return /music.163.com/.test(url)
   }
 
-  appMatch(url) {
-    //http://music.163.com/#/song/4280207/
-    return /music.163.com/.test(url)
-  }
-
   musicApi(path, query) {
     return Url.format({
       protocol: "http",
@@ -53,21 +48,85 @@ class WYMusic extends BaseMusic {
       // console.log("resu",data);
       let song = data.songs[0]
       if (!song) {
-        BaseMusic.SupportError();
+        return BaseMusic.SupportError();
       }
 
       return new Song({
         name: song.name,
         album: song.album.name,
-        image: song.album.artist.picUrl,
+        artists: song.artists.map(a => a.name),
+        image: song.album.picUrl,
         resourceUrl: song.mp3Url,
         orderer: orderer
       })
-
     }
     else {
       BaseMusic.SupportError();
     }
+  }
+
+  * search(kw, orderer) {
+    let result = yield urllib.request(this.musicApi("api/search/get"),
+      {
+        method: "POST",
+        data: {
+          s: kw,
+          type: 1,
+          limit: 10,
+          offset: 0
+        },
+        headers: {
+          Referer: "http://music.163.com/",
+          Cookie: "appver=1.5.0.75771"
+        }
+      })
+
+    if (result && result.data && result.status === 200) {
+      let data = JSON.parse(result.data.toString())
+
+      return data.result.songs.map(song => new Song({
+        id: song.id,
+        name: song.name,
+        album: song.album.name,
+        artists: song.artists.map(a => a.name),
+        image: song.album.picUrl,
+        resourceUrl: song.mp3Url,
+        orderer: orderer
+      }))
+    }
+
+    return []
+  }
+
+  * get(id, orderer) {
+    let result = yield urllib.request(this.musicApi(`api/song/detail`, {id: id, ids: `[${id}]`}),
+      {
+        headers: {
+          Referer: "http://music.163.com/",
+          Cookie: "appver=1.5.0.75771"
+        }
+      })
+
+    if (result && result.data && result.status === 200) {
+      let data = JSON.parse(result.data.toString())
+
+      let song = data.songs[0]
+      if (!song) {
+        return BaseMusic.SupportError();
+      }
+
+      return new Song({
+        id: song.id,
+        name: song.name,
+        artists: song.artists.map(a => a.name),
+        album: song.album.name,
+        image: song.album.picUrl,
+        resourceUrl: song.mp3Url,
+        orderer: orderer
+      })
+    }
+
+    return null
   }
 }
 

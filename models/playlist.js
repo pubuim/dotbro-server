@@ -17,6 +17,10 @@ module.exports = {
     return order.length
   },
 
+  next: function () {
+    return order.length
+  },
+
   remove: function (id, force) {
     let ids = [].concat(id)
     let removed = []

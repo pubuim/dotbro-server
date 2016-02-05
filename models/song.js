@@ -11,12 +11,14 @@ class Song {
 
     Object.defineProperties(this, {
       $id: {
+        writable: true,
         enumerable: false,
         value: genId()
       },
       id: {
         enumerable: true,
-        get: () => this.$id
+        get: () => this.$id,
+        set: (id) => {this.$id = id}
       }
     })
 
