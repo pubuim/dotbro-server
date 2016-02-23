@@ -17,13 +17,13 @@ It allows members in your team demand musics by a command. <img src="./screensho
 ## Usage
 
 - Prepare a server with a stand alone IP address and media output
-- Build dtobro service
+- Build dotbro service _(or setup on [Raspberry Pi](https://www.raspberrypi.org/) like [this](http://www.jianshu.com/p/fe8d06a8f751))_
 	- Install [nvm](https://github.com/creationix/nvm)
 	- Clone the code and enter directory
 	- Run `nvm i && npm i`
 	- Start service with [forever](https://github.com/foreverjs/forever) or [pm2](https://github.com/Unitech/pm2)
-- Setup dtobro extension ([how](http://docs.pubu.im/command.html))
-- Run command on [PUBUIM](https://pubu.im) `/${command} ${url}` _(example: `/play http://music.163.com/#/m/song?id=37202356`)_
+- Setup dotbro extension ([how](http://docs.pubu.im/command.html))
+- Run command on [PUBUIM](https://pubu.im) _(example: `/play http://music.163.com/#/m/song?id=37202356`)_
 
 ## Resource and license
 
