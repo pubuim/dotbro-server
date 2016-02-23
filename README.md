@@ -17,7 +17,7 @@ It allows members in your team demand musics by a command. <img src="./screensho
 ## Usage
 
 - Prepare a server with a stand alone IP address and media output
-- Build dotbro service _(or setup on [Raspberry Pi](https://www.raspberrypi.org/) like [this](http://www.jianshu.com/p/fe8d06a8f751))_
+- Build dotbro service _(or setup on [Raspberry Pi](https://www.raspberrypi.org/) like this article [《如何用树莓派共享办公室的音箱》](http://www.jianshu.com/p/fe8d06a8f751))_
 	- Install [nvm](https://github.com/creationix/nvm)
 	- Clone the code and enter directory
 	- Run `nvm i && npm i`
