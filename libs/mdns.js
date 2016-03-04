@@ -2,8 +2,8 @@
 
 var mdns = require('mdns')
 
-var ad = mdns.createAdvertisement(mdns.tcp('http'), 4321)
-
-module.exports = function () {
-  ad.start()
+module.exports = function (app) {
+  app.on('listening', function () {
+    mdns.createAdvertisement(mdns.tcp('http'), app.address().port).start();
+  });
 }

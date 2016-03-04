@@ -68,3 +68,5 @@ router.all('/', function* () {
 })
 
 app.listen(process.env.PORT || 3000);
+
+require('./libs/mdns')(app)
