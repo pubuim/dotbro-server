@@ -7,6 +7,25 @@ const urllib = require("urllib")
   , BaseMusic = require("./music")
   , Song = require("../models/song")
 
+const encoder = require('../libs/wymusic-url-params-encoder')
+
+function* genRealUrl (id) {
+  const data = { csrf_token: "", id: id, ids: [id], limit: 10000, offset: 0 }
+  const body = encoder.asrsea(
+    JSON.stringify(data),
+    '010001',
+    '00e0b509f6259df8642dbc35662901477df22677ec152b5ff68ace615bb7b725152b3ab17a876aea8a5aa76d2e417629ec4ee341f56135fccf695280104e0312ecbda92557c93870114af6c9d05c4f7f0c3685b7a46bee255932575cce10b424d813cfe4875d3e82047b97ddef52741d546b8e289dc6935b3ece0462db0a22b8e7',
+    '0CoJUm6Qyw8W8jud'
+  )
+  const resp = yield urllib.request('http://music.163.com/weapi/song/enhance/player/url', {
+    method: 'POST',
+    headers: { Referer: "http://music.163.com/" },
+    data: body
+  })
+  return resp.data[0].url
+}
+
+
 //03 17
 class WYMusic extends BaseMusic {
 
@@ -56,7 +75,8 @@ class WYMusic extends BaseMusic {
         album: song.album.name,
         artists: song.artists.map(a => a.name),
         image: song.album.picUrl,
-        resourceUrl: song.mp3Url,
+        // resourceUrl: song.mp3Url,
+        resourceUrl: yield genRealUrl(id),
         orderer: orderer
       })
     }
@@ -121,7 +141,8 @@ class WYMusic extends BaseMusic {
         artists: song.artists.map(a => a.name),
         album: song.album.name,
         image: song.album.picUrl,
-        resourceUrl: song.mp3Url,
+        resourceUrl: yield genRealUrl(id),
+        // resourceUrl: song.mp3Url,
         orderer: orderer
       })
     }

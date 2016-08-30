@@ -19,8 +19,13 @@ class Player {
 
     let that = this
 
+    console.info(`Requesting: ${song.resourceUrl}`)
     this.stream = request(song.resourceUrl)
-      .on('error', () => this.activate(true))
+      .on('error', e => {
+        console.error(e)
+        this.activate(true)
+      })
+      .on('data', data => console.log('Got data length', data.length))
       .pipe(new lame.Decoder())
       .on('format', function (format) {
         that.speaker = new Speaker(format)
