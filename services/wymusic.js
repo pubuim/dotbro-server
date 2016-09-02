@@ -10,7 +10,7 @@ const urllib = require("urllib")
 const encoder = require('../libs/wymusic-url-params-encoder')
 
 function* genRealUrl (id) {
-  const data = { csrf_token: "", id: id, ids: [id], limit: 10000, offset: 0 }
+  const data = { csrf_token: "", br: 128000, ids: [String(id)] }
   const body = encoder.asrsea(
     JSON.stringify(data),
     '010001',
@@ -20,9 +20,9 @@ function* genRealUrl (id) {
   const resp = yield urllib.request('http://music.163.com/weapi/song/enhance/player/url', {
     method: 'POST',
     headers: { Referer: "http://music.163.com/" },
-    data: body
+    data: { params: body.encText, encSecKey: body.encSecKey }
   })
-  return resp.data[0].url
+  return JSON.parse(resp.data.toString()).data[0].url
 }
 
 

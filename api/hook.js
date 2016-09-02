@@ -114,6 +114,7 @@ var music = {
           }
         }
       } catch (err) {
+        console.error(err.stack)
         this.body = {
           text: '音乐添加失败：' + err.message
         }
