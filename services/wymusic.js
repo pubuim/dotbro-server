@@ -9,7 +9,12 @@ const urllib = require("urllib")
 
 const encoder = require('../libs/wymusic-url-params-encoder')
 
-function* genRealUrl (id) {
+function* genRealUrl (dummyUrl, id) {
+  if ((yield urllib.request(dummyUrl, {
+    method: 'HEAD',
+    headers: { Referer: "http://music.163.com/" }
+  })).status < 400) return dummyUrl
+
   const data = { csrf_token: "", br: 128000, ids: [String(id)] }
   const body = encoder.asrsea(
     JSON.stringify(data),
@@ -75,8 +80,7 @@ class WYMusic extends BaseMusic {
         album: song.album.name,
         artists: song.artists.map(a => a.name),
         image: song.album.picUrl,
-        // resourceUrl: song.mp3Url,
-        resourceUrl: yield genRealUrl(id),
+        resourceUrl: yield genRealUrl(song.mp3Url, id),
         orderer: orderer
       })
     }
@@ -141,8 +145,7 @@ class WYMusic extends BaseMusic {
         artists: song.artists.map(a => a.name),
         album: song.album.name,
         image: song.album.picUrl,
-        resourceUrl: yield genRealUrl(id),
-        // resourceUrl: song.mp3Url,
+        resourceUrl: yield genRealUrl(song.mp3Url, id),
         orderer: orderer
       })
     }
